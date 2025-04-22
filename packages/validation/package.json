@@ -1,9 +1,9 @@
 {
-  "name": "@repo/common",
+  "name": "@repo/validation",
   "module": "index.ts",
   "type": "module",
   "private": true,
-  "exports":{
+  "exports": {
     ".": "./src/index.ts"
   },
   "devDependencies": {
@@ -12,5 +12,9 @@
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "zod": "^4.0.0-beta.20250420T053007",
+    "@repo/common": "*"
   }
 }

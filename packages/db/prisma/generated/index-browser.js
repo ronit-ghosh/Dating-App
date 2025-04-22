@@ -119,7 +119,53 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  firstname: 'firstname',
+  lastname: 'lastname',
+  email: 'email',
+  password: 'password',
+  dob: 'dob',
+  age: 'age',
+  gender: 'gender',
+  createdAt: 'createdAt',
+  upadatedAt: 'upadatedAt'
+};
+
+exports.Prisma.UserDetailsScalarFieldEnum = {
+  userId: 'userId',
+  datingIntention: 'datingIntention',
+  relationshipType: 'relationshipType',
+  familyPlans: 'familyPlans',
+  work: 'work',
+  jobTitle: 'jobTitle',
+  college: 'college',
+  highestDegree: 'highestDegree',
+  politicalBeliefs: 'politicalBeliefs',
+  drink: 'drink',
+  tobacco: 'tobacco',
+  weed: 'weed',
+  drugs: 'drugs',
+  createdAt: 'createdAt',
+  upadatedAt: 'upadatedAt'
+};
+
+exports.Prisma.PromptsScalarFieldEnum = {
+  userId: 'userId',
+  title: 'title',
+  desc: 'desc',
+  createdAt: 'createdAt',
+  upadatedAt: 'upadatedAt'
+};
+
+exports.Prisma.ImagesScalarFieldEnum = {
+  userId: 'userId',
+  primaryImageUrl: 'primaryImageUrl',
+  imageUrl2: 'imageUrl2',
+  imageUrl3: 'imageUrl3',
+  imageUrl4: 'imageUrl4',
+  imageUrl5: 'imageUrl5',
+  imageUrl6: 'imageUrl6',
+  createdAt: 'createdAt',
+  upadatedAt: 'upadatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -132,9 +178,20 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+exports.Gender = exports.$Enums.Gender = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  UserDetails: 'UserDetails',
+  Prompts: 'Prompts',
+  Images: 'Images'
 };
 
 /**

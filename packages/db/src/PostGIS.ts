@@ -2,7 +2,7 @@ import { prisma } from "./db";
 
 async function CreateLocationTable() {
   // Enable PostGIS
-  await prisma.$executeRawUnsafe(`CREATE EXTENSION IF NOT EXISTS postgis`);
+  await prisma.$executeRawUnsafe(`CREATE EXTENSION IF NOT EXISTS postgis;`);
 
   // Create locations table
   await prisma.$executeRawUnsafe(`

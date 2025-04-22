@@ -1,7 +1,11 @@
 import { prisma } from "./db";
 
+interface NearbyUserTypes {
+  id: string
+}
+
 export async function findNearbyUsers(lng: number, lat: number, radius = 10000) {
-    return prisma.$queryRawUnsafe(`
+    const nearbyUsers = await prisma.$queryRawUnsafe(`
       SELECT u.id, u.name,
              ST_Distance(ul.location, ST_MakePoint($1, $2)::geography) AS distance
       FROM "User" u
@@ -10,4 +14,6 @@ export async function findNearbyUsers(lng: number, lat: number, radius = 10000) 
       ORDER BY distance ASC
       LIMIT 20
     `, lng, lat, radius);
+
+    return nearbyUsers as NearbyUserTypes[]
 }
