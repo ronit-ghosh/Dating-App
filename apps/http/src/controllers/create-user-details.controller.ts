@@ -1,11 +1,11 @@
-import { createUserValidation, ZodError } from "@repo/validation";
-import type { Request, Response } from "express";
-import createUser from "../services/create-user.service";
-import { Messages } from "@repo/common";
+import { userDetailsValidation, ZodError } from "@repo/validation"
+import type { Request, Response } from "express"
+import createUserDetails from "../services/create-user-details.service"
+import { Messages } from "@repo/common"
 
-export default async function createUserController(req: Request, res: Response) {
+export default async function createUserDetailsController(req: Request, res: Response) {
     try {
-        const parsedValues = createUserValidation.safeParse(req.body)
+        const parsedValues = userDetailsValidation.safeParse(req.body)
 
         if (!parsedValues.success) {
             const error = parsedValues.error as ZodError
@@ -13,7 +13,7 @@ export default async function createUserController(req: Request, res: Response) 
             return
         }
 
-        const userId = await createUser(parsedValues.data)
+        const userId = await createUserDetails(parsedValues.data)
 
         res.json({ userId })
     } catch (error) {

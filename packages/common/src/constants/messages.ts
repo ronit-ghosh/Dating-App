@@ -7,9 +7,11 @@ export const Messages = {
     USER_NOT_FOUND: 'User not found!',
     USER_NOT_CREATED: 'User not created!',
     USER_ALREADY_EXISTS: 'User already exists!',
-    USER_LOCATION_NOT_CREATED: 'User location creatnion failed!',
+    USER_LOCATION_NOT_CREATED: 'User location creation failed!',
+    USER_DETAILS_NOT_CREATED: 'User details creation failed!',
     INVALID_STRING: 'Input is not a valid string!',
     INVALID_NUMBER: 'Input is not a valid number!',
+    INVALID_BOOLEAN: 'Input is not a valid boolean!',
     INVALID_CREDENTIALS: 'Invalid email or password!',
     NEARBY_USERS_NOT_FOUND: 'No nearby users found!',
 
