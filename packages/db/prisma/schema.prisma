@@ -15,8 +15,6 @@ model User {
   email       String
   password    String
   dob         DateTime      @db.Date
-  age         Int
-  gender      Gender
   userDetails UserDetails[]
   Prompts     Prompts[]
   Images      Images[]
@@ -35,22 +33,42 @@ model User {
  * sharing these details
  */
 model UserDetails {
-  userId           String   @id
+  userId           String          @id
+  gender           Gender
+  datingGender     Gender
+  sexuality        String
   datingIntention  String?
   relationshipType String?
-  familyPlans      String?
   work             String?
   jobTitle         String?
   college          String?
   highestDegree    String?
-  politicalBeliefs String?
   drink            Boolean?
   tobacco          Boolean?
   weed             Boolean?
   drugs            Boolean?
-  user             User     @relation(fields: [userId], references: [id])
-  createdAt        DateTime @default(now())
-  upadatedAt       DateTime @updatedAt
+  user             User            @relation(fields: [userId], references: [id])
+  showOnProfile    ShowOnProfile[]
+  createdAt        DateTime        @default(now())
+  upadatedAt       DateTime        @updatedAt
+}
+
+model ShowOnProfile {
+  userDetailsUserId String       @id
+  gender            Boolean?     @default(true)
+  datingGender      Boolean?     @default(true)
+  sexuality         Boolean?     @default(true)
+  datingIntention   Boolean?     @default(false)
+  relationshipType  Boolean?     @default(false)
+  work              Boolean?     @default(false)
+  jobTitle          Boolean?     @default(false)
+  college           Boolean?     @default(false)
+  highestDegree     Boolean?     @default(false)
+  drink             Boolean?     @default(false)
+  tobacco           Boolean?     @default(false)
+  weed              Boolean?     @default(false)
+  drugs             Boolean?     @default(false)
+  UserDetails       UserDetails? @relation(fields: [userDetailsUserId], references: [userId])
 }
 
 model Prompts {
