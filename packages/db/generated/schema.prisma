@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String        @id @default(uuid())
+  firstname   String
+  lastname    String?
+  email       String
+  password    String
+  dob         DateTime      @db.Date
+  userDetails UserDetails[]
+  Prompts     Prompts[]
+  Images      Images[]
+  createdAt   DateTime      @default(now())
+  upadatedAt  DateTime      @updatedAt
+  /**
+   * no location field here
+   * user_location will be stored separately
+   * via raw SQL (../src/PostGIS.ts)
+   */
+}
+
+/**
+ * Most of the details are optional
+ * bc user may or may not be be comfortable
+ * sharing these details
+ */
+model UserDetails {
+  userId           String          @id
+  gender           Gender
+  datingGender     Gender
+  sexuality        String
+  datingIntention  String?
+  relationshipType String?
+  work             String?
+  jobTitle         String?
+  college          String?
+  highestDegree    String?
+  drink            Boolean?
+  tobacco          Boolean?
+  weed             Boolean?
+  drugs            Boolean?
+  user             User            @relation(fields: [userId], references: [id])
+  showOnProfile    ShowOnProfile[]
+  createdAt        DateTime        @default(now())
+  upadatedAt       DateTime        @updatedAt
+}
+
+model ShowOnProfile {
+  userDetailsUserId String       @id
+  gender            Boolean?     @default(true)
+  datingGender      Boolean?     @default(true)
+  sexuality         Boolean?     @default(true)
+  datingIntention   Boolean?     @default(false)
+  relationshipType  Boolean?     @default(false)
+  work              Boolean?     @default(false)
+  jobTitle          Boolean?     @default(false)
+  college           Boolean?     @default(false)
+  highestDegree     Boolean?     @default(false)
+  drink             Boolean?     @default(false)
+  tobacco           Boolean?     @default(false)
+  weed              Boolean?     @default(false)
+  drugs             Boolean?     @default(false)
+  UserDetails       UserDetails? @relation(fields: [userDetailsUserId], references: [userId])
+}
+
+model Prompts {
+  userId     String   @id
+  user       User     @relation(fields: [userId], references: [id])
+  title      String?
+  desc       String?
+  createdAt  DateTime @default(now())
+  upadatedAt DateTime @updatedAt
+}
+
+model Images {
+  userId          String   @id
+  primaryImageUrl String
+  imageUrl2       String
+  imageUrl3       String
+  imageUrl4       String
+  imageUrl5       String
+  imageUrl6       String
+  user            User     @relation(fields: [userId], references: [id])
+  createdAt       DateTime @default(now())
+  upadatedAt      DateTime @updatedAt
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}

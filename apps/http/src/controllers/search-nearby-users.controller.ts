@@ -1,11 +1,20 @@
 import { locationValidation, ZodError } from "@repo/validation"
 import type { Request, Response } from "express"
-import searchNearbyUsers from "../services/search-nearby-users.service"
 import { Messages } from "@repo/common"
+import searchNearbyUsers from "../services/search-nearby-users.service";
 
 export default async function searchNearbyUsersController(req: Request, res: Response) {
     try {
-        const parsedValues = locationValidation.safeParse(req.body)
+        // @ts-ignore
+        const userId = req.userId;
+        const { lat, lng } = req.query;
+
+        if (!lat || !lng) {
+            res.status(400).json({ error: 'Missing location' });
+            return
+        }
+
+        const parsedValues = locationValidation.safeParse({ lat, lng })
 
         if (!parsedValues.success) {
             const error = parsedValues.error as ZodError
@@ -13,11 +22,11 @@ export default async function searchNearbyUsersController(req: Request, res: Res
             return
         }
 
-        const nearbyUsers = await searchNearbyUsers(parsedValues.data)
+        const profiles = await searchNearbyUsers({ ...parsedValues.data, userId })
 
-        res.json({ nearbyUsers })
+        res.json({ profiles })
     } catch (error) {
-        console.error("Create User Controller Error:", error);
+        console.error("Search User Controller Error:", error);
 
         const knownErrors = Object.values(Messages.ERROR)
 

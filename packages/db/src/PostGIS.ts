@@ -1,4 +1,4 @@
-import { prisma } from "./db";
+import { prisma } from ".";
 
 async function CreateLocationTable() {
   // Enable PostGIS

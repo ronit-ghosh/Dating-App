@@ -38,23 +38,20 @@ export const createUserValidation = z.object({
     password: z
         .string({ error: Messages.ERROR.INVALID_STRING })
         .min(8, { error: "Password must be 8 characters long!" }),
-    dob: DobSchema,
-    age: z
-        .number({ error: Messages.ERROR.INVALID_NUMBER })
-        .min(2, { error: "Age is not valid!" }),
-    gender: GenderEnum,
+    dob: DobSchema
 }).extend(locationValidation)
 
 export const userDetailsValidation = z.object({
     userId: z.string({ error: Messages.ERROR.INVALID_STRING }),
+    gender: GenderEnum,
+    datingGender: GenderEnum,
+    sexuality: z.string({ error: Messages.ERROR.INVALID_STRING }),
     datingIntention: z.string({ error: Messages.ERROR.INVALID_STRING }),
     relationshipType: z.string({ error: Messages.ERROR.INVALID_STRING }),
-    familyPlans: z.string({ error: Messages.ERROR.INVALID_STRING }),
     work: z.string({ error: Messages.ERROR.INVALID_STRING }),
     jobTitle: z.string({ error: Messages.ERROR.INVALID_STRING }),
     college: z.string({ error: Messages.ERROR.INVALID_STRING }),
     highestDegree: z.string({ error: Messages.ERROR.INVALID_STRING }),
-    politicalBeliefs: z.string({ error: Messages.ERROR.INVALID_STRING }),
     drink: z.boolean({ error: Messages.ERROR.INVALID_BOOLEAN }),
     tobacco: z.boolean({ error: Messages.ERROR.INVALID_BOOLEAN }),
     weed: z.boolean({ error: Messages.ERROR.INVALID_BOOLEAN }),

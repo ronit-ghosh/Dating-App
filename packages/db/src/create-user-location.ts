@@ -1,4 +1,4 @@
-import { prisma } from "./db";
+import { prisma } from ".";
 
 export async function createUserLocation(userId: string, lat: number, lng: number) {
   return prisma.$executeRawUnsafe(`

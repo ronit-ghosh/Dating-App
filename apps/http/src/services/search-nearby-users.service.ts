@@ -1,23 +1,39 @@
-import { Messages } from "@repo/common"
-import { findNearbyUsers, prisma } from "@repo/db"
 import type { LocationTypes } from "@repo/validation"
+import { findNearbyUsers, prisma, redis } from "@repo/db";
 
-export default async function searchNearbyUsers(data: LocationTypes) {
-    const { lng, lat } = data
+interface Datatypes extends LocationTypes {
+    userId: string
+}
 
-    const nearbyUsers = await findNearbyUsers(lng, lat)
+export default async function searchNearbyUsers(data: Datatypes) {
+    const { lat, lng, userId } = data
 
-    const users = await Promise.all(
-        nearbyUsers.map((user) => {
-            return prisma.user.findFirst({
-                where: {
-                    id: user.id
-                }
-            })
-        })
-    )
+    const redisKey = `seen_profiles:${userId}`;
 
-    if (!users) throw new Error(Messages.ERROR.NEARBY_USERS_NOT_FOUND)
+    // Ensure Bloomredis exists
+    await redis.call('BF.RESERVE', redisKey, 0.001, 1000000).catch(() => { });
 
-    return users
+    const nearbyUsers = await findNearbyUsers(lng, lat, 5000)
+
+    const ids = nearbyUsers.map(user => user.id.toString());
+
+    if (ids.length === 0) return []
+
+    // Check which are unseen profiles 
+    const results: number[] = await redis.call('BF.MEXISTS', redisKey, ...ids) as number[];
+    const unseenIds = ids.filter((id, index) => results[index] === 0);
+
+    if (unseenIds.length === 0) return []
+
+    const profiles = await prisma.user.findMany({
+        where: {
+            id: { in: unseenIds }
+        },
+        take: 20,
+        select: {
+            id: true
+        },
+    });
+
+    return profiles
 }
