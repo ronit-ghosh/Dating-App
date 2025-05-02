@@ -5,8 +5,7 @@ import { Messages } from "@repo/common";
 
 export default async function handleSwipeController(req: Request, res: Response) {
     try {
-        // @ts-ignore
-        const userId = req.userId;
+        const userId = req.userId!;
         const parsedValues = swipeDataValidation.safeParse(req.body)
 
         if (!parsedValues.success) {
@@ -17,7 +16,7 @@ export default async function handleSwipeController(req: Request, res: Response)
 
         handleSwipe({ ...parsedValues.data, userId })
     } catch (error) {
-        console.error("Search User Controller Error:", error);
+        console.error("Handle Swipe Controller Error:", error);
 
         const knownErrors = Object.values(Messages.ERROR)
 

@@ -1,11 +1,12 @@
-import { userDetailsValidation, ZodError } from "@repo/validation"
-import type { Request, Response } from "express"
-import createUserDetails from "../services/create-user-details.service"
-import { Messages } from "@repo/common"
+import type { Request, Response } from "express";
+import { canChatValidation, ZodError } from "@repo/validation";
+import handleCanChat from "../services/handle-chat.service";
+import { Messages } from "@repo/common";
 
-export default async function createUserDetailsController(req: Request, res: Response) {
+
+export default async function handleCanChatController(req: Request, res: Response) {
     try {
-        const parsedValues = userDetailsValidation.safeParse(req.body)
+        const parsedValues = canChatValidation.safeParse(req.body)
 
         if (!parsedValues.success) {
             const error = parsedValues.error as ZodError
@@ -13,11 +14,9 @@ export default async function createUserDetailsController(req: Request, res: Res
             return
         }
 
-        const userId = await createUserDetails(parsedValues.data)
-
-        res.json({ userId })
+        handleCanChat(parsedValues.data)
     } catch (error) {
-        console.error("Create User Details Controller Error:", error);
+        console.error("Handle Chat Controller Error:", error);
 
         const knownErrors = Object.values(Messages.ERROR)
 

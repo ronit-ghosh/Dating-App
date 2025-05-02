@@ -1,6 +1,7 @@
+import { Messages } from "@repo/common";
 import { S3Client } from "bun";
 
-async function createSignedUrl() {
+async function createPreSignedUrl() {
     const key = `user/lume_${Date.now()}_${String(Math.random()).split('.')[1]}.zip`
 
     const preSignedUrl = S3Client.presign(key, {
@@ -16,6 +17,10 @@ async function createSignedUrl() {
     return { preSignedUrl, key }
 }
 
-export default async function uploadImage(data: any) {
+export default async function uploadImage() {
+    const preSignedUrl = createPreSignedUrl()
+    
+    if (!preSignedUrl) throw new Error(Messages.ERROR.PRESIGNED_NOT_GENERATED)
 
+    return preSignedUrl
 }

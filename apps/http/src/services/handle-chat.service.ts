@@ -1,7 +1,8 @@
 import { Messages } from "@repo/common";
 import { prisma } from "@repo/db";
+import type { CanChatTypes } from "@repo/validation";
 
-export default async function handleChat(data: any) {
+export default async function handleCanChat(data: CanChatTypes) {
     const { canChat, matchId } = data
     if (canChat === false) return
 

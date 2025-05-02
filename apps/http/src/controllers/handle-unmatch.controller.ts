@@ -1,19 +1,12 @@
-import { locationValidation, ZodError } from "@repo/validation"
-import type { Request, Response } from "express"
-import { Messages } from "@repo/common"
-import searchNearbyUsers from "../services/search-nearby-users.service";
+import { unmatchValidation, ZodError } from "@repo/validation";
+import type { Request, Response } from "express";
+import handleUnmatch from "../services/handle-unmatch.service";
+import { Messages } from "@repo/common";
 
-export default async function searchNearbyUsersController(req: Request, res: Response) {
+export default async function handleUnmatchController(req: Request, res: Response) {
     try {
-        const userId = req.userId!;
-        const { lat, lng } = req.query;
-
-        if (!lat || !lng) {
-            res.status(400).json({ error: 'Missing location' });
-            return
-        }
-
-        const parsedValues = locationValidation.safeParse({ lat, lng })
+        const userId = req.userId!
+        const parsedValues = unmatchValidation.safeParse(req.body)
 
         if (!parsedValues.success) {
             const error = parsedValues.error as ZodError
@@ -21,11 +14,9 @@ export default async function searchNearbyUsersController(req: Request, res: Res
             return
         }
 
-        const profiles = await searchNearbyUsers({ ...parsedValues.data, userId })
-
-        res.json({ profiles })
+        handleUnmatch({ ...parsedValues.data, userId })
     } catch (error) {
-        console.error("Search Nearby Users Controller Error:", error);
+        console.error("Handle Unmatch Controller Error:", error);
 
         const knownErrors = Object.values(Messages.ERROR)
 

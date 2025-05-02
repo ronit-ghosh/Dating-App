@@ -70,5 +70,10 @@ export const unmatchValidation = z.object({
 
 export const createPromptValidation = z.object({
     title: z.string({ error: Messages.ERROR.INVALID_STRING }),
-    desc    : z.string({ error: Messages.ERROR.INVALID_STRING })
+    desc: z.string({ error: Messages.ERROR.INVALID_STRING })
+})
+
+export const canChatValidation = z.object({
+    canChat: z.boolean({ error: Messages.ERROR.INVALID_BOOLEAN }),
+    matchId: z.string({ error: Messages.ERROR.INVALID_STRING })
 })

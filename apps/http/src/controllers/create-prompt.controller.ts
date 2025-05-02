@@ -1,19 +1,13 @@
-import { locationValidation, ZodError } from "@repo/validation"
-import type { Request, Response } from "express"
-import { Messages } from "@repo/common"
-import searchNearbyUsers from "../services/search-nearby-users.service";
+import { createPromptValidation, ZodError } from "@repo/validation";
+import type { Request, Response } from "express";
+import createPrompt from "../services/create-prompt.service";
+import { Messages } from "@repo/common";
 
-export default async function searchNearbyUsersController(req: Request, res: Response) {
+export default async function createPromptController(req: Request, res: Response) {
     try {
-        const userId = req.userId!;
-        const { lat, lng } = req.query;
+        const userId = req.userId!
 
-        if (!lat || !lng) {
-            res.status(400).json({ error: 'Missing location' });
-            return
-        }
-
-        const parsedValues = locationValidation.safeParse({ lat, lng })
+        const parsedValues = createPromptValidation.safeParse(req.body)
 
         if (!parsedValues.success) {
             const error = parsedValues.error as ZodError
@@ -21,11 +15,9 @@ export default async function searchNearbyUsersController(req: Request, res: Res
             return
         }
 
-        const profiles = await searchNearbyUsers({ ...parsedValues.data, userId })
-
-        res.json({ profiles })
+        createPrompt({ ...parsedValues.data, userId })
     } catch (error) {
-        console.error("Search Nearby Users Controller Error:", error);
+        console.error("Create Prompt Controller Error:", error);
 
         const knownErrors = Object.values(Messages.ERROR)
 
