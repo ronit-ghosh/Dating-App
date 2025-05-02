@@ -9,34 +9,50 @@ datasource db {
 }
 
 model User {
-  id          String        @id @default(uuid())
-  firstname   String
-  lastname    String?
-  email       String
-  password    String
-  dob         DateTime      @db.Date
-  userDetails UserDetails[]
-  Prompts     Prompts[]
-  Images      Images[]
-  createdAt   DateTime      @default(now())
-  upadatedAt  DateTime      @updatedAt
+  id               String        @id @default(uuid())
+  firstname        String
+  lastname         String?
+  email            String
+  password         String
+  dob              DateTime      @db.Date
+  userDetails      UserDetails[]
+  Prompts          Prompts[]
+  Images           Images[]
+  createdAt        DateTime      @default(now())
+  upadatedAt       DateTime      @updatedAt
   /**
    * no location field here
    * user_location will be stored separately
    * via raw SQL (../src/PostGIS.ts)
    */
+  matchesInitiated Match[]       @relation("UserAMatches")
+  matchesReceived  Match[]       @relation("UserBMatches")
 }
 
-/**
- * Most of the details are optional
- * bc user may or may not be be comfortable
- * sharing these details
- */
+model Match {
+  id          String   @id @default(cuid())
+  userAId     String
+  userBId     String
+  active      Boolean  @default(true)
+  chat        Boolean  @default(false)
+  unMatchedBy String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  /**
+   * UserA => Who matched the user
+   * UserB => User who matched by UserA
+   */
+  userA       User     @relation("UserAMatches", fields: [userAId], references: [id])
+  userB       User     @relation("UserBMatches", fields: [userBId], references: [id])
+
+  @@unique([userAId, userBId])
+}
+
 model UserDetails {
   userId           String          @id
   gender           Gender
   datingGender     Gender
-  sexuality        String
+  sexuality        String?
   datingIntention  String?
   relationshipType String?
   work             String?
@@ -72,25 +88,22 @@ model ShowOnProfile {
 }
 
 model Prompts {
-  userId     String   @id
+  id         String   @id @default(uuid())
+  userId     String
   user       User     @relation(fields: [userId], references: [id])
-  title      String?
-  desc       String?
+  title      String
+  desc       String
   createdAt  DateTime @default(now())
   upadatedAt DateTime @updatedAt
 }
 
 model Images {
-  userId          String   @id
-  primaryImageUrl String
-  imageUrl2       String
-  imageUrl3       String
-  imageUrl4       String
-  imageUrl5       String
-  imageUrl6       String
-  user            User     @relation(fields: [userId], references: [id])
-  createdAt       DateTime @default(now())
-  upadatedAt      DateTime @updatedAt
+  id         String   @id @default(uuid())
+  userId     String
+  imageUrl   String
+  user       User     @relation(fields: [userId], references: [id])
+  createdAt  DateTime @default(now())
+  upadatedAt DateTime @updatedAt
 }
 
 enum Gender {

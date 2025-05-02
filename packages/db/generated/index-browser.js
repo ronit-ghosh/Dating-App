@@ -131,6 +131,17 @@ exports.Prisma.UserScalarFieldEnum = {
   upadatedAt: 'upadatedAt'
 };
 
+exports.Prisma.MatchScalarFieldEnum = {
+  id: 'id',
+  userAId: 'userAId',
+  userBId: 'userBId',
+  active: 'active',
+  chat: 'chat',
+  unMatchedBy: 'unMatchedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.UserDetailsScalarFieldEnum = {
   userId: 'userId',
   gender: 'gender',
@@ -168,6 +179,7 @@ exports.Prisma.ShowOnProfileScalarFieldEnum = {
 };
 
 exports.Prisma.PromptsScalarFieldEnum = {
+  id: 'id',
   userId: 'userId',
   title: 'title',
   desc: 'desc',
@@ -176,13 +188,9 @@ exports.Prisma.PromptsScalarFieldEnum = {
 };
 
 exports.Prisma.ImagesScalarFieldEnum = {
+  id: 'id',
   userId: 'userId',
-  primaryImageUrl: 'primaryImageUrl',
-  imageUrl2: 'imageUrl2',
-  imageUrl3: 'imageUrl3',
-  imageUrl4: 'imageUrl4',
-  imageUrl5: 'imageUrl5',
-  imageUrl6: 'imageUrl6',
+  imageUrl: 'imageUrl',
   createdAt: 'createdAt',
   upadatedAt: 'upadatedAt'
 };
@@ -208,6 +216,7 @@ exports.Gender = exports.$Enums.Gender = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Match: 'Match',
   UserDetails: 'UserDetails',
   ShowOnProfile: 'ShowOnProfile',
   Prompts: 'Prompts',

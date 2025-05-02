@@ -57,3 +57,18 @@ export const userDetailsValidation = z.object({
     weed: z.boolean({ error: Messages.ERROR.INVALID_BOOLEAN }),
     drugs: z.boolean({ error: Messages.ERROR.INVALID_BOOLEAN })
 })
+
+export const swipeDataValidation = z.object({
+    matched: z.boolean({ error: Messages.ERROR.INVALID_BOOLEAN }),
+    targetId: z.string({ error: Messages.ERROR.INVALID_STRING })
+})
+
+export const unmatchValidation = z.object({
+    matched: z.boolean({ error: Messages.ERROR.INVALID_BOOLEAN }),
+    matchId: z.string({ error: Messages.ERROR.INVALID_STRING })
+})
+
+export const createPromptValidation = z.object({
+    title: z.string({ error: Messages.ERROR.INVALID_STRING }),
+    desc    : z.string({ error: Messages.ERROR.INVALID_STRING })
+})
