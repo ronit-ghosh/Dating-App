@@ -17,6 +17,7 @@ export const Messages = {
     NEARBY_USERS_NOT_FOUND: 'No nearby users found!',
     ERROR_UPDATING_MATCH: 'Error occured while updating match details!',
     PRESIGNED_NOT_GENERATED: 'Error generating pre signed url!',
+    IMAGE_NOT_UPLOADED: 'Error uploading image!',
 
     UNAUTHORIZED: 'You are not authorized to perform this action!',
     INTERNAL_SERVER_ERROR: 'Something went wrong, Please try again later!'
