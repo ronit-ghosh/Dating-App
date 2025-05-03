@@ -10,13 +10,13 @@ export default async function handleSwipe(data: DataTypes) {
     const { targetId, matched, userId } = data
 
     // Add to bloom filter
-    redis.call('BF.ADD', `seen_profiles:${userId}`, targetId.toString())
+    redis.bf.add(`seen_profiles:${userId}`, targetId.toString())
         .catch(err => console.error('Failed to add to Bloom filter:', err));
 
     const [userAId, userBId] = [userId, targetId].sort();
 
     if (matched === true) {
-       const response = await prisma.match.upsert({
+        const response = await prisma.match.upsert({
             where: {
                 userAId_userBId: {
                     userAId,

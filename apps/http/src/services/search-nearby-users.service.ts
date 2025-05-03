@@ -8,10 +8,13 @@ interface Datatypes extends LocationTypes {
 export default async function searchNearbyUsers(data: Datatypes) {
     const { lat, lng, userId } = data
 
-    const redisKey = `seen_profiles:${userId}`;
+    const redisBFKey = `seen_profiles:${userId}`;
 
     // Ensure Bloomredis exists
-    await redis.call('BF.RESERVE', redisKey, 0.001, 1000000).catch(() => { });
+    await redis.bf.reserve(redisBFKey, 0.01, 1000000).catch(() => { })
+
+    // preventing from seeing own profile
+    await redis.bf.add(`seen_profiles:${userId}`, userId.toString())
 
     const nearbyUsers = await findNearbyUsers(lng, lat, 5000)
 
@@ -19,9 +22,9 @@ export default async function searchNearbyUsers(data: Datatypes) {
 
     if (ids.length === 0) return []
 
-    // Check which are unseen profiles 
-    const results: number[] = await redis.call('BF.MEXISTS', redisKey, ...ids) as number[];
-    const unseenIds = ids.filter((id, index) => results[index] === 0);
+    // Check which are unseen profiles
+    const results = await redis.bf.mExists(redisBFKey, ids);
+    const unseenIds = ids.filter((id, index) => results[index] === false); // filter the seen profiles
 
     if (unseenIds.length === 0) return []
 
@@ -31,8 +34,11 @@ export default async function searchNearbyUsers(data: Datatypes) {
         },
         take: 20,
         select: {
-            id: true
-        },
+            id: true,
+            email: true,
+            firstname: true,
+            lastname: true,
+        }
     });
 
     return profiles

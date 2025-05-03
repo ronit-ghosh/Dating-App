@@ -6,6 +6,7 @@ import { Messages } from "@repo/common";
 export default async function handleSwipeController(req: Request, res: Response) {
     try {
         const userId = req.userId!;
+
         const parsedValues = swipeDataValidation.safeParse(req.body)
 
         if (!parsedValues.success) {
@@ -15,6 +16,8 @@ export default async function handleSwipeController(req: Request, res: Response)
         }
 
         handleSwipe({ ...parsedValues.data, userId })
+
+        res.json({ msg: "Updated" })
     } catch (error) {
         console.error("Handle Swipe Controller Error:", error);
 
@@ -23,7 +26,7 @@ export default async function handleSwipeController(req: Request, res: Response)
         if (knownErrors.includes((error as Error).message)) {
             let status = 400;
 
-            if ((error as Error).message === Messages.ERROR.UNAUTHORIZED) status = 403;
+            if ((error as Error).message === Messages.ERROR.UNAUTHORIZED) status = 401;
             if ((error as Error).message === Messages.ERROR.INTERNAL_SERVER_ERROR) status = 500;
 
             res.status(status).json({ msg: (error as Error).message });

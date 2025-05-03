@@ -6,7 +6,7 @@ interface NearbyUserTypes {
 
 export async function findNearbyUsers(lng: number, lat: number, radius = 10000) {
     const nearbyUsers = await prisma.$queryRawUnsafe(`
-      SELECT u.id, u.name,
+      SELECT u.id,
              ST_Distance(ul.location, ST_MakePoint($1, $2)::geography) AS distance
       FROM "User" u
       JOIN locations ul ON u.id = ul.user_id

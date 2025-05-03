@@ -1,16 +1,31 @@
 import { Messages } from "@repo/common"
 import { createUserLocation, prisma } from "@repo/db"
 import type { CreateUserTypes } from "@repo/validation"
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 export default async function createUser(data: CreateUserTypes) {
-    const { email, lat, lng } = data
+    const secret = process.env.JWT_SECRET as string
+    if (!secret) throw new Error(Messages.ERROR.JWT_SECRET_MISSING)
+
+    const { firstname, lastname, dob, password, email, lat, lng } = data
+    const saltRounds = 10;
 
     const existingUser = await prisma.user.findFirst({ where: { email } })
 
     if (existingUser) throw new Error(Messages.ERROR.USER_ALREADY_EXISTS)
 
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync(password, salt);
+
     const { id } = await prisma.user.create({
-        data,
+        data: {
+            firstname,
+            lastname,
+            dob,
+            email,
+            password: hash
+        },
         select: {
             id: true
         }
@@ -20,7 +35,19 @@ export default async function createUser(data: CreateUserTypes) {
 
     const response = await createUserLocation(id, lat, lng)
 
-    if (!response) throw new Error(Messages.ERROR.USER_LOCATION_NOT_CREATED)
+    if (!response) {
+        await prisma.user.delete({
+            where: {
+                id
+            }
+        })
+        throw new Error(Messages.ERROR.USER_LOCATION_NOT_CREATED)
+    }
 
-    return id
+    const token = jwt.sign({ userId: id }, secret, {
+        algorithm: "RS256",
+        expiresIn: 60 * 24 * 2
+    })
+
+    return { id, token }
 }

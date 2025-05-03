@@ -2,7 +2,11 @@ import { Messages } from "@repo/common"
 import { prisma } from "@repo/db"
 import type { UserDetailsTypes } from "@repo/validation"
 
-export default async function createUserDetails(data: UserDetailsTypes) {
+interface DataTypes extends UserDetailsTypes {
+    userId: string
+}
+
+export default async function createUserDetails(data: DataTypes) {
     const existingUser = await prisma.user.findFirst({ where: { id: data.userId } })
 
     if (!existingUser) throw new Error(Messages.ERROR.USER_NOT_FOUND)

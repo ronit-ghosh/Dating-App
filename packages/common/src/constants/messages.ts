@@ -18,6 +18,9 @@ export const Messages = {
     ERROR_UPDATING_MATCH: 'Error occured while updating match details!',
     PRESIGNED_NOT_GENERATED: 'Error generating pre signed url!',
     IMAGE_NOT_UPLOADED: 'Error uploading image!',
+    JWT_SECRET_MISSING:"Jwt token secret is not present in .env file",
+    INVALID_AUTH_HEADER: "Invalid authorization header!",
+    WRONG_PASSWORD: "Wrong password!",
 
     UNAUTHORIZED: 'You are not authorized to perform this action!',
     INTERNAL_SERVER_ERROR: 'Something went wrong, Please try again later!'

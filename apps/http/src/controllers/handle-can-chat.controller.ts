@@ -1,14 +1,22 @@
-import type { Request, Response } from "express"
-import uploadImage from "../services/upload-image.service"
+import type { Request, Response } from "express";
+import { canChatValidation, ZodError } from "@repo/validation";
+import handleCanChat from "../services/handle-chat.service";
 import { Messages } from "@repo/common";
 
-export default async function uploadImageController(_: Request, res: Response) {
-    try {
-        const response = await uploadImage()
 
-        res.json({ presignedurl: response.preSignedUrl, key: response.key })
+export default async function handleCanChatController(req: Request, res: Response) {
+    try {
+        const parsedValues = canChatValidation.safeParse(req.body)
+
+        if (!parsedValues.success) {
+            const error = parsedValues.error as ZodError
+            res.json({ msg: error.issues.map(err => err.message) })
+            return
+        }
+
+        handleCanChat(parsedValues.data)
     } catch (error) {
-        console.error("Upload Image Controller Error:", error);
+        console.error("Handle Chat Controller Error:", error);
 
         const knownErrors = Object.values(Messages.ERROR)
 

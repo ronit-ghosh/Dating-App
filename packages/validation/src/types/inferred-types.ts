@@ -3,12 +3,14 @@ import type {
     canChatValidation,
     createPromptValidation,
     createUserValidation,
+    emailPasswordValidation,
     locationValidation,
     swipeDataValidation,
     unmatchValidation,
     userDetailsValidation
 } from "./types";
 
+export type EmailPasswordTypes = z.infer<typeof emailPasswordValidation>
 export type CreateUserTypes = z.infer<typeof createUserValidation>
 export type LocationTypes = z.infer<typeof locationValidation>
 export type UserDetailsTypes = z.infer<typeof userDetailsValidation>

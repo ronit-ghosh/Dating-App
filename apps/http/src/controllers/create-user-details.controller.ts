@@ -5,6 +5,7 @@ import { Messages } from "@repo/common"
 
 export default async function createUserDetailsController(req: Request, res: Response) {
     try {
+        const userId = req.userId!
         const parsedValues = userDetailsValidation.safeParse(req.body)
 
         if (!parsedValues.success) {
@@ -13,9 +14,9 @@ export default async function createUserDetailsController(req: Request, res: Res
             return
         }
 
-        const userId = await createUserDetails(parsedValues.data)
+        const response = await createUserDetails({ ...parsedValues.data, userId })
 
-        res.json({ userId })
+        res.json({ userId: response })
     } catch (error) {
         console.error("Create User Details Controller Error:", error);
 
@@ -24,7 +25,7 @@ export default async function createUserDetailsController(req: Request, res: Res
         if (knownErrors.includes((error as Error).message)) {
             let status = 400;
 
-            if ((error as Error).message === Messages.ERROR.UNAUTHORIZED) status = 403;
+            if ((error as Error).message === Messages.ERROR.UNAUTHORIZED) status = 401;
             if ((error as Error).message === Messages.ERROR.INTERNAL_SERVER_ERROR) status = 500;
 
             res.status(status).json({ msg: (error as Error).message });

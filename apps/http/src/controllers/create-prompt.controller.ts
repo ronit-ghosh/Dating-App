@@ -24,7 +24,7 @@ export default async function createPromptController(req: Request, res: Response
         if (knownErrors.includes((error as Error).message)) {
             let status = 400;
 
-            if ((error as Error).message === Messages.ERROR.UNAUTHORIZED) status = 403;
+            if ((error as Error).message === Messages.ERROR.UNAUTHORIZED) status = 401;
             if ((error as Error).message === Messages.ERROR.INTERNAL_SERVER_ERROR) status = 500;
 
             res.status(status).json({ msg: (error as Error).message });

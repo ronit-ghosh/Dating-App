@@ -26,6 +26,14 @@ export const locationValidation = z.object({
     lng: z.float64({ error: "Not a valid longitude!" })
 })
 
+export const emailPasswordValidation = z.object({
+    email: z
+        .email({ error: "Input is not a valid email!" }),
+    password: z
+        .string({ error: Messages.ERROR.INVALID_STRING })
+        .min(8, { error: "Password must be 8 characters long!" }),
+})
+
 export const createUserValidation = z.object({
     firstname: z
         .string({ error: Messages.ERROR.INVALID_STRING })
@@ -33,16 +41,10 @@ export const createUserValidation = z.object({
     lastname: z
         .string({ error: Messages.ERROR.INVALID_STRING })
         .min(3, { error: "Lastname should be more 3 charaters long!" }),
-    email: z
-        .email({ error: "Input is not a valid email!" }),
-    password: z
-        .string({ error: Messages.ERROR.INVALID_STRING })
-        .min(8, { error: "Password must be 8 characters long!" }),
     dob: DobSchema
-}).extend(locationValidation)
+}).extend(locationValidation).extend(emailPasswordValidation)
 
 export const userDetailsValidation = z.object({
-    userId: z.string({ error: Messages.ERROR.INVALID_STRING }),
     gender: GenderEnum,
     datingGender: GenderEnum,
     sexuality: z.string({ error: Messages.ERROR.INVALID_STRING }),

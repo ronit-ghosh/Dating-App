@@ -1,14 +1,16 @@
-import type { Request, Response } from "express"
-import uploadImage from "../services/upload-image.service"
+import type { Request, Response } from "express";
+import getMatches from "../services/get-matches.service";
 import { Messages } from "@repo/common";
 
-export default async function uploadImageController(_: Request, res: Response) {
+export default function getMatchesController(req: Request, res: Response) {
     try {
-        const response = await uploadImage()
+        const userId = req.userId!
 
-        res.json({ presignedurl: response.preSignedUrl, key: response.key })
+        const profiles = getMatches(userId)
+
+        res.json({ profiles })
     } catch (error) {
-        console.error("Upload Image Controller Error:", error);
+        console.error("Handle Swipe Controller Error:", error);
 
         const knownErrors = Object.values(Messages.ERROR)
 

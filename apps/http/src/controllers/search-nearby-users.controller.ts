@@ -6,7 +6,8 @@ import searchNearbyUsers from "../services/search-nearby-users.service";
 export default async function searchNearbyUsersController(req: Request, res: Response) {
     try {
         const userId = req.userId!;
-        const { lat, lng } = req.query;
+        
+        const { lat, lng } = req.body;
 
         if (!lat || !lng) {
             res.status(400).json({ error: 'Missing location' });
@@ -32,7 +33,7 @@ export default async function searchNearbyUsersController(req: Request, res: Res
         if (knownErrors.includes((error as Error).message)) {
             let status = 400;
 
-            if ((error as Error).message === Messages.ERROR.UNAUTHORIZED) status = 403;
+            if ((error as Error).message === Messages.ERROR.UNAUTHORIZED) status = 401;
             if ((error as Error).message === Messages.ERROR.INTERNAL_SERVER_ERROR) status = 500;
 
             res.status(status).json({ msg: (error as Error).message });
