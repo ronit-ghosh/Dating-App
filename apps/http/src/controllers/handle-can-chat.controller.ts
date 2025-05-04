@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
-import { canChatValidation, ZodError } from "@repo/validation";
+import { canChatValidation, ZodError } from "@lume/validation";
 import handleCanChat from "../services/handle-chat.service";
-import { Messages } from "@repo/common";
+import { Messages } from "@lume/common";
 
 
 export default async function handleCanChatController(req: Request, res: Response) {

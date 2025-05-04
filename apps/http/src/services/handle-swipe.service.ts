@@ -1,6 +1,6 @@
-import { Messages } from "@repo/common";
-import { prisma, redis } from "@repo/db";
-import type { SwipeDataTypes } from "@repo/validation";
+import { Messages } from "@lume/common";
+import { prisma, redis } from "@lume/db";
+import type { SwipeDataTypes } from "@lume/validation";
 
 interface DataTypes extends SwipeDataTypes {
     userId: string

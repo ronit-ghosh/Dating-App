@@ -1,6 +1,6 @@
 import type { Request, Response } from "express"
 import uploadImage from "../services/upload-image.service"
-import { Messages } from "@repo/common";
+import { Messages } from "@lume/common";
 
 export default async function uploadImageController(_: Request, res: Response) {
     try {

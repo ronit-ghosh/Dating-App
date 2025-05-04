@@ -9,15 +9,15 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@repo/typescript-config": "*"
+    "@lume/typescript-config": "*"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
-    "@repo/common": "*",
-    "@repo/db": "*",
-    "@repo/validation": "*",
+    "@lume/common": "*",
+    "@lume/db": "*",
+    "@lume/validation": "*",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",

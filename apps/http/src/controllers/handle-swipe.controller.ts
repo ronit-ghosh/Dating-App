@@ -1,7 +1,7 @@
-import { swipeDataValidation, ZodError } from "@repo/validation";
+import { swipeDataValidation, ZodError } from "@lume/validation";
 import type { Request, Response } from "express";
 import handleSwipe from "../services/handle-swipe.service";
-import { Messages } from "@repo/common";
+import { Messages } from "@lume/common";
 
 export default async function handleSwipeController(req: Request, res: Response) {
     try {

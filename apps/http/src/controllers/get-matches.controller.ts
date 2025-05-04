@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import getMatches from "../services/get-matches.service";
-import { Messages } from "@repo/common";
+import { Messages } from "@lume/common";
 
 export default function getMatchesController(req: Request, res: Response) {
     try {

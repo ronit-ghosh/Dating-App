@@ -1,7 +1,7 @@
-import { createUserValidation, ZodError } from "@repo/validation";
+import { createUserValidation, ZodError } from "@lume/validation";
 import type { Request, Response } from "express";
 import createUser from "../services/create-user.service";
-import { Messages } from "@repo/common";
+import { Messages } from "@lume/common";
 
 export default async function createUserController(req: Request, res: Response) {
     try {

@@ -1,6 +1,6 @@
-import { Messages } from "@repo/common"
-import { createUserLocation, prisma } from "@repo/db"
-import type { CreateUserTypes } from "@repo/validation"
+import { Messages } from "@lume/common"
+import { createUserLocation, prisma } from "@lume/db"
+import type { CreateUserTypes } from "@lume/validation"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 

@@ -1,4 +1,4 @@
-import { Messages } from "@repo/common";
+import { Messages } from "@lume/common";
 import type { Request, Response } from "express"
 import saveImageUrl from "../services/save-image-url.service";
 

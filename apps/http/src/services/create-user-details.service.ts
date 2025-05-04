@@ -1,6 +1,6 @@
-import { Messages } from "@repo/common"
-import { prisma } from "@repo/db"
-import type { UserDetailsTypes } from "@repo/validation"
+import { Messages } from "@lume/common"
+import { prisma } from "@lume/db"
+import type { UserDetailsTypes } from "@lume/validation"
 
 interface DataTypes extends UserDetailsTypes {
     userId: string

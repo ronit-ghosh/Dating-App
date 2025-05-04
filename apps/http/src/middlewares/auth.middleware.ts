@@ -1,4 +1,4 @@
-import { Messages } from "@repo/common";
+import { Messages } from "@lume/common";
 import type { NextFunction, Request, Response } from "express";
 import jwt, { type JwtPayload } from "jsonwebtoken"
 

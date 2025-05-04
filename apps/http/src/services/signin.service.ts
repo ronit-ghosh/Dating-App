@@ -1,6 +1,6 @@
-import { Messages } from "@repo/common";
-import { prisma } from "@repo/db";
-import type { EmailPasswordTypes } from "@repo/validation";
+import { Messages } from "@lume/common";
+import { prisma } from "@lume/db";
+import type { EmailPasswordTypes } from "@lume/validation";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 

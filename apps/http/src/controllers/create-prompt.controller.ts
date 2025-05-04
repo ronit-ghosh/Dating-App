@@ -1,7 +1,7 @@
-import { createPromptValidation, ZodError } from "@repo/validation";
+import { createPromptValidation, ZodError } from "@lume/validation";
 import type { Request, Response } from "express";
 import createPrompt from "../services/create-prompt.service";
-import { Messages } from "@repo/common";
+import { Messages } from "@lume/common";
 
 export default async function createPromptController(req: Request, res: Response) {
     try {

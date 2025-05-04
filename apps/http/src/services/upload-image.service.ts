@@ -1,4 +1,4 @@
-import { Messages } from "@repo/common";
+import { Messages } from "@lume/common";
 import { S3Client } from "bun";
 
 export default async function uploadImage() {

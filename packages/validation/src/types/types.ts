@@ -1,4 +1,4 @@
-import { Messages } from "@repo/common";
+import { Messages } from "@lume/common";
 import z from "zod";
 
 const DobSchema = z

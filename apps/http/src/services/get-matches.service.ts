@@ -1,5 +1,5 @@
-import { Messages } from "@repo/common"
-import { prisma } from "@repo/db"
+import { Messages } from "@lume/common"
+import { prisma } from "@lume/db"
 
 export default async function getMatches(userId: string) {
     const response = await prisma.match.findMany({

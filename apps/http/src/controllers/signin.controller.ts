@@ -1,5 +1,5 @@
-import { Messages } from "@repo/common"
-import { emailPasswordValidation, ZodError } from "@repo/validation"
+import { Messages } from "@lume/common"
+import { emailPasswordValidation, ZodError } from "@lume/validation"
 import type { Request, Response } from "express"
 import signin from "../services/signin.service"
 

@@ -1,5 +1,5 @@
-import type { LocationTypes } from "@repo/validation"
-import { findNearbyUsers, prisma, redis } from "@repo/db";
+import type { LocationTypes } from "@lume/validation"
+import { findNearbyUsers, prisma, redis } from "@lume/db";
 
 interface Datatypes extends LocationTypes {
     userId: string

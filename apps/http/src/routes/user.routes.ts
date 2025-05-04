@@ -7,7 +7,6 @@ import createUserDetailsController from "../controllers/create-user-details.cont
 
 export const router = Router()
 
-router.post("/create", createUserController);
 router.post("/create-details", createUserDetailsController);
 router.post("/create-prompt", createPromptController);
 router.post("/create-image", saveImageUrlController);

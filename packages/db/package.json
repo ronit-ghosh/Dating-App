@@ -1,5 +1,5 @@
 {
-  "name": "@repo/db",
+  "name": "@lume/db",
   "module": "index.ts",
   "type": "module",
   "private": true,
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@prisma/client": "6.7.0",
-    "@repo/typescript-config": "*",
+    "@lume/typescript-config": "*",
     "redis": "^5.0.0"
   },
   "peerDependencies": {

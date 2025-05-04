@@ -1,6 +1,6 @@
-import { Messages } from "@repo/common";
-import { prisma } from "@repo/db";
-import type { CanChatTypes } from "@repo/validation";
+import { Messages } from "@lume/common";
+import { prisma } from "@lume/db";
+import type { CanChatTypes } from "@lume/validation";
 
 export default async function handleCanChat(data: CanChatTypes) {
     const { canChat, matchId } = data

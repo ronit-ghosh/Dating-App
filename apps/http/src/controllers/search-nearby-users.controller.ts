@@ -1,6 +1,6 @@
-import { locationValidation, ZodError } from "@repo/validation"
+import { locationValidation, ZodError } from "@lume/validation"
 import type { Request, Response } from "express"
-import { Messages } from "@repo/common"
+import { Messages } from "@lume/common"
 import searchNearbyUsers from "../services/search-nearby-users.service";
 
 export default async function searchNearbyUsersController(req: Request, res: Response) {

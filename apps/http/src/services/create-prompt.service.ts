@@ -1,6 +1,6 @@
-import { Messages } from "@repo/common"
-import { prisma } from "@repo/db"
-import type { CreatePromptsTypes } from "@repo/validation"
+import { Messages } from "@lume/common"
+import { prisma } from "@lume/db"
+import type { CreatePromptsTypes } from "@lume/validation"
 
 interface DataTypes extends CreatePromptsTypes {
     userId: string
