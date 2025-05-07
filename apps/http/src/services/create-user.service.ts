@@ -44,10 +44,7 @@ export default async function createUser(data: CreateUserTypes) {
         throw new Error(Messages.ERROR.USER_LOCATION_NOT_CREATED)
     }
 
-    const token = jwt.sign({ userId: id }, secret, {
-        algorithm: "RS256",
-        expiresIn: 60 * 24 * 2
-    })
+    const token = jwt.sign({ userId: id }, secret)
 
     return { id, token }
 }
